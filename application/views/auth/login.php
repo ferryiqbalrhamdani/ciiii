@@ -42,13 +42,13 @@
                                     </div>
                                     <form class="user">
                                         <div class="form-group">
-                                            <input type="text" class="form-control form-control-user"
-                                                id="username" name="username"
-                                                placeholder="Enter Username...">
+                                            <input type="email" class="form-control form-control-user"
+                                                id="email" name="email"
+                                                placeholder="Enter Email...">
                                         </div>
                                         <div class="form-group">
                                             <input type="password" class="form-control form-control-user"
-                                                id="exampleInputPassword" placeholder="Password">
+                                                id="password" name="password" placeholder="Password">
                                         </div>
                                         <div class="form-group">
                                             <div class="custom-control custom-checkbox small">

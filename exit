@@ -1,0 +1,23 @@
+[33mcommit 2877c1103242cb18411d6c1f056593612e32f182[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Author: ferryiqbalrhamdani <rhamdani128@gmail.com>
+Date:   Thu Jun 30 18:00:11 2022 +0700
+
+    menambahkan template bootstrap
+
+[33mcommit 5943c9bd8d93495371c4327a1cf8b4670a8ab45d[m
+Author: ferryiqbalrhamdani <rhamdani128@gmail.com>
+Date:   Thu Jun 30 03:32:48 2022 +0700
+
+    setting configurations
+
+[33mcommit 96ff5a7dde970f619b8977e14b99be446402008a[m
+Author: ferryiqbalrhamdani <rhamdani128@gmail.com>
+Date:   Thu Jun 30 03:19:29 2022 +0700
+
+    add CI-3
+
+[33mcommit eddbaad77f8b54b8f66d62a38f54cf4fd5bbe663[m
+Author: ferryiqbalrhamdani <rhamdani128@gmail.com>
+Date:   Thu Jun 30 03:02:42 2022 +0700
+
+    add freamwork CI-3
