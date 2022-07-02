@@ -8,5 +8,6 @@
 </head>
 <body>
     <h1>success</h1>
+    <a href="<?= base_url('auth/logout'); ?>">logout</a>
 </body>
 </html>
