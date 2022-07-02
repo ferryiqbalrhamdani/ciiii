@@ -8,9 +8,55 @@ class Auth extends CI_Controller {
     }
 
     public function index() {
-        $this->load->view('templates/auth_heder');
-        $this->load->view('auth/login');
-        $this->load->view('templates/auth_footer');
+
+        // set rules
+        $this->form_validation->set_rules('email', 'Email', 'required|trim', [
+            'required' => 'Email harus diisi!'
+        ]);
+        $this->form_validation->set_rules('password', 'Password', 'required|trim|min_length[3]', [
+            'required' => 'password harus diisi!',
+            'min_length' => 'Password minimal 3 karakter!',
+            'matches' => 'Passord tidak sama!'
+        ]);
+
+        if($this->form_validation->run() == false) {
+            $this->load->view('templates/auth_heder');
+            $this->load->view('auth/login');
+            $this->load->view('templates/auth_footer');
+        } else {
+            // validasi success
+            $this->_login();
+        }
+        
+    }
+
+    private function _login() {
+        $email = $this->input->post('email');
+        $password = $this->input->post('password');
+
+        $user = $this->db->get_where('user', ['email' => $email])->row_array();
+
+        // usernya ada
+        if($user) {
+            // cek password
+            if(password_verify($password, $user['password'])) {
+                $data = [ 
+                    'email' => $user['email'] 
+                ];
+
+                $this->session->set_userdata($data);
+
+                redirect('user');
+            } else {
+                $this->session->set_flashdata('pesan', '<div class="alert alert-danger" role="alert">
+                Password salah!</div>');
+                redirect('auth');
+            }
+        } else {
+            $this->session->set_flashdata('pesan', '<div class="alert alert-danger" role="alert">
+            Username belum terdaftar!</div>');
+            redirect('auth');
+        }
     }
 
     public function register() {
