@@ -20,9 +20,9 @@ class Auth extends CI_Controller {
         ]);
 
         if($this->form_validation->run() == false) {
-            $this->load->view('templates/auth_heder');
+            $this->load->view('templates/heder');
             $this->load->view('auth/login');
-            $this->load->view('templates/auth_footer');
+            $this->load->view('templates/footer');
         } else {
             // validasi success
             $this->_login();
@@ -79,9 +79,9 @@ class Auth extends CI_Controller {
         $this->form_validation->set_rules('password2', 'Password', 'required|trim|matches[password1]');
 
         if($this->form_validation->run() == false) {
-            $this->load->view('templates/auth_heder');
+            $this->load->view('templates/heder');
             $this->load->view('auth/register', $data);
-            $this->load->view('templates/auth_footer');
+            $this->load->view('templates/footer');
         } else {
             $this->Auth_model->tambahData();
 
@@ -97,5 +97,45 @@ class Auth extends CI_Controller {
         $this->session->set_flashdata('pesan', '<div class="alert alert-success" role="alert">
             Anda berhasil logout.</div>');
         redirect('auth');
+    }
+
+    public function changePassword() {
+        $data['title'] = 'Change Password';
+        
+        $this->form_validation->set_rules('new_password1', 'New Password', 'required|trim|min_length[3]|matches[new_password2]');
+        $this->form_validation->set_rules('new_password2', 'Confirm New Password', 'required|trim|min_length[3]|matches[new_password1]');
+
+        if ($this->form_validation->run() == false) {
+            $this->load->view('templates/heder', $data);
+            $this->load->view('auth/changepassword', $data);
+            $this->load->view('templates/footer');
+        } else {
+
+            $email = $this->input->post('email');
+            $user = $this->db->get_where('user', ['email' => $email])->row_array();
+            $current_password = $this->input->post('new_password1');
+
+            if ($user) {
+                //password sudah ok
+                $password_hash = password_hash($current_password, PASSWORD_DEFAULT);
+    
+                $this->db->set('password', $password_hash);
+                $this->db->where('user', $this->input->post('email'));
+                $this->db->update('user');
+    
+                $this->session->set_flashdata('pesan', '<div class="alert alert-success" role="alert">Password changed!</div>');
+                redirect('auth/changepassword');
+
+            } else {
+                $this->session->set_flashdata('pesan', '<div class="alert alert-danger" role="alert">Nothing user!</div>');
+                redirect('auth/changepassword');
+
+            }
+            
+            // if($this->db->get_where('user', ['email' => $this->input->post('email')]) == $this->input->post('email')) {
+            // } else {
+            // }
+        
+        }
     }
 }
